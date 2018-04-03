@@ -422,3 +422,34 @@ describe("to PascalCase", () => {
     assert.deepEqual(expected, result);
   });
 });
+
+describe("options", () => {
+  it("ignores key blacklist", () => {
+    const before = {
+      field_one: {
+        nested_field_one: "content one",
+        nested_field_two: "content two",
+        content: {
+          WindowsPhone: "MobileOSWindowsPhone",
+          Android: "MobileOSAndroid",
+          iOS: "MobileOSiOS",
+          Unknown: "MobileOSUnknown"
+        }
+      }
+    };
+    const expected = {
+      FieldOne: {
+        NestedFieldOne: "content one",
+        NestedFieldTwo: "content two",
+        content: {
+          WindowsPhone: "MobileOSWindowsPhone",
+          Android: "MobileOSAndroid",
+          iOS: "MobileOSiOS",
+          Unknown: "MobileOSUnknown"
+        }
+      }
+    };
+    const result = toPascalCase(before, { ignoreKeys: ["content"] });
+    assert.deepEqual(expected, result);
+  });
+});
